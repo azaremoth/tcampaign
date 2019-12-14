@@ -18,7 +18,7 @@ local unitDef = {
   customParams          = {
 		factionname		   	= "neutral",
 		normaltex 		   	= "unittextures/normalmaps/atlas_euf_buildings_normal.png",
-		normalmaps 		   	= "yes",		
+		normalmaps 		   	= "yes",
 		helptext 			= "Noone will tell you what this tower was built for."
   },
   description        = "An experimental tower",
