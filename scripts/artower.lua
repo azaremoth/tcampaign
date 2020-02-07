@@ -37,6 +37,7 @@ local function Emiting()
 end
 
 function script.Create( )
+	Spring.SetUnitNeutral(unitID, true)
 	SendToUnsynced('setselectable', unitID, false)
 	while (GetUnitValue(COB.BUILD_PERCENT_LEFT) > 0) do
 		Sleep(100)

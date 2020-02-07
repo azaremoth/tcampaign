@@ -25,6 +25,7 @@ local function Checking()
 end
 
 function script.Create( )
+	Spring.SetUnitNeutral(unitID, true)
 	StartThread(Checking)
 	SendToUnsynced('setselectable', unitID, false)
 	Spring.SetUnitBlocking(unitID, false, false, false, false, false, false, false)
