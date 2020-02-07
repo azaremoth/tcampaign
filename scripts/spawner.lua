@@ -1,8 +1,9 @@
 --include "common.lua"
 local spawnunitcount = tonumber(UnitDefs[unitDefID].customParams.spawnunitcount) or 5
-local radius = tonumber(UnitDefs[unitDefID].customParams.spawnradius) or 450
+local radius = tonumber(UnitDefs[unitDefID].customParams.spawnradius) or 400
 local spawnunit = UnitDefs[unitDefID].customParams.spawnunit or "tc_ghoul"
 local spawningceg = UnitDefs[unitDefID].customParams.spawningceg or 'BURROWING_BIGGEST'
+local spawningtype = UnitDefs[unitDefID].customParams.spawningtype or "close"
 
 local x, y, z = Spring.GetUnitPosition(unitID)
 local spawnerTeam = Spring.GetUnitTeam(unitID)
@@ -14,7 +15,10 @@ local function Checking()
 			local aLocalteam = Spring.GetUnitTeam(aUnitID)
 			local aAi = select(4, Spring.GetTeamInfo(aLocalteam))		
 			if (not aAi) and (aLocalteam ~= spawnerTeam) and not Spring.AreTeamsAllied(aLocalteam, spawnerTeam) then
-				Spring.DestroyUnit(unitID,false,false)
+				if spawningtype == "close" then
+					x, y, z = Spring.GetUnitPosition(aUnitID)
+				end
+				Spring.DestroyUnit(unitID,false,false)				
 			end
 		end
 		Sleep(1000)

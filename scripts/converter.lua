@@ -5,7 +5,7 @@ local function Checking()
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	local converterTeam = Spring.GetUnitTeam(unitID)
 	while true do
-		local unitsAround = Spring.GetUnitsInSphere(x,y,z, 300)
+		local unitsAround = Spring.GetUnitsInSphere(x,y,z, radius)
 		for _,aUnitID in ipairs(unitsAround) do
 			local aLocalteam = Spring.GetUnitTeam(aUnitID)
 			local aAi = select(4, Spring.GetTeamInfo(aLocalteam))		
