@@ -51,7 +51,7 @@ function script.Create( )
 	SendToUnsynced('setselectable', unitID, false)	
 	Turn2( medikit, y_axis, math.random(360), 100 )
 	StartThread(Checking)
---	Spring.SetUnitBlocking(unitID, false, false, false, false, false, false, false)
+	Spring.SetUnitBlocking(unitID, false, false, false, false, false, false, false)
 --	Spring.SetUnitCloak(unitID, 2, 0)	
 end
 
