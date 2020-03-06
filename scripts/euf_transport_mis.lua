@@ -77,10 +77,10 @@ end
 local function UnitSpawner()
 	Sleep(2000)
 	if campaignBattleID == 1 then
-		local unitOne = Spring.CreateUnit("euf_marine", x-45, y, z+50, 0, teamID)
-		local unitTwo = Spring.CreateUnit("euf_marine", x-15, y, z+65, 0, teamID)
-		local unitThr = Spring.CreateUnit("euf_marine_laser", x+15, y, z+65, 0, teamID)
-		local unitFou = Spring.CreateUnit("euf_sniper", x+45, y, z+50, 0, teamID)
+		local unitOne = Spring.CreateUnit("euf_marine", x-45, y, z+70, 0, teamID)
+		local unitTwo = Spring.CreateUnit("euf_marine", x-15, y, z+85, 0, teamID)
+		local unitThr = Spring.CreateUnit("euf_marine_laser", x+15, y, z+85, 0, teamID)
+		local unitFou = Spring.CreateUnit("euf_sniper", x+45, y, z+70, 0, teamID)
 	elseif campaignBattleID == 3 then
 		local unitOne = Spring.CreateUnit("euf_pyro", x-50, y, z-40, 0, teamID)
 		local unitTwo = Spring.CreateUnit("euf_pyro", x-50, y, z+60, 0, teamID)
