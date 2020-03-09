@@ -1,19 +1,12 @@
 local objects = {
-	"features/rocksmars/rocks_big1.s3o",
-	"features/rocksmars/rocks_big2.s3o",
-	"features/rocksmars/rocks_big3.s3o",
-	"features/rocksmars/rocks_big4.s3o",
-	"features/rocksmars/rocks_big5.s3o",
-	"features/rocksmars/rocks_big6.s3o",
-	"features/rocksmars/rocks_big7.s3o",
-	"features/rocksmars/rocks_big8.s3o",
-	"features/rocksmars/rocks_big9.s3o",
+	"features/rocks_sand/pillar1.s3o",
+	"features/rocks_sand/pillar2.s3o",
 }
 
 local BuildingModuleDef = {}
 local function createBuildingModuleDef(i)
-  BuildingModuleDef["marsrock" .. i] = {
-     description = [[Mars rocks]],
+  BuildingModuleDef["pillar_sand" .. i] = {
+     description = [[Sandy pillars]],
 	 autoreclaimable = false,
      blocking    = true,
      burnable    = false,
@@ -26,16 +19,16 @@ local function createBuildingModuleDef(i)
      reclaimTime = 10000,
      mass        = 9999999999,
      object = objects[(i % #objects) + 1] ,
-     footprintX  = 8,
-     footprintZ  = 8,
+     footprintX  = 5,
+     footprintZ  = 5,
 	 customparams = { 
-			normaltex 		= "unittextures/normalmaps/feat_rocksM.png",
+			normaltex 		= "unittextures/normalmaps/rocks_sand.png",
 			normalmaps 		= "yes",			
 		},  
   }
 end
 
-for i=1,9 do
+for i=1,2 do
   createBuildingModuleDef(i)
 end
 
