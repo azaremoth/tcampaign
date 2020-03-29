@@ -74,7 +74,7 @@ local unitDef = {
     "euf_marine",
     "euf_marine_laser",	
     "euf_bazooka",
-    "euf_marine_missile",		
+    "euf_bazooka_missile",		
     "euf_pyro",
     "euf_sniper",
     "euf_sarge",	

@@ -29,6 +29,7 @@ local moving = false
 local attacking = false
 local inbunker = false
 local restore_delay, MOVEANIMATIONSPEED
+local uncloakcount = 2000
 
 local MOVEANIMATIONSLEEPTIME = 340
 
@@ -208,6 +209,16 @@ local function BoredAnimation()
 	end
 end
 
+local function Recloaking()
+	while true do
+		if (uncloakcount < 1) then		
+			Spring.SetUnitCloak(unitID, 2, 100)
+			Spring.SetUnitStealth(unitID, true)
+		end
+	Sleep(300)
+	uncloakcount = (uncloakcount - 300)
+	end
+end
 ------------------------ ACTIVATION
 
 function script.Create()
@@ -224,7 +235,8 @@ function script.Create()
 	Spring.SetUnitCloak(unitID, 2, 100)
 	Spring.SetUnitStealth(unitID, true)	
 	StartThread( Walkscript )
-	StartThread( BoredAnimation )	
+	StartThread( BoredAnimation )
+	StartThread( Recloaking )	
 end
 
 function script.StartMoving()
@@ -236,13 +248,10 @@ function script.StopMoving()
 end
   
 local function RestoreAfterDelay()
-
 	Sleep(restore_delay)
 	attacking = false
 	Turn2( chest, y_axis, 0, 55 )
 	Turn2( chest, x_axis, 0, 30 )
-	Spring.SetUnitCloak(unitID, 2, 100)
-	Spring.SetUnitStealth(unitID, true)
 	return (0)
 end
 
@@ -263,6 +272,9 @@ function script.HitByWeapon ( x, z, weaponDefID, damage )
 	if inbunker then
 		return(0)
 	elseif not inbunker then
+		uncloakcount = 2000
+		Spring.SetUnitCloak(unitID, false)
+		Spring.SetUnitStealth(unitID, false)		
 		return(damage)
 	end
 end
@@ -312,6 +324,7 @@ end
 function script.FireWeapon1()
 		EmitSfx( emit_gun, GUNFLARE )
 		EmitSfx( emit_groundflash, GROUNDFLASH )
+		uncloakcount = 2000		
 		Sleep(300)
 		return(1)
 end
