@@ -116,7 +116,7 @@ local unitDef = {
   weapons = {
     [1]  = {
       badTargetCategory  = "HEAVYARMOR",
-      name                = "RAIDER_LASER",	  
+      name                = "RAIDERLASER",	  
       onlyTargetCategory = "LAND",
     },
   },
