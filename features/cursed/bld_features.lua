@@ -26,7 +26,7 @@ local function createBuildingModuleDef(i)
 	 autoreclaimable = false,
      blocking    = true,
      burnable    = false,
-     nodrawundergray = false,
+     nodrawundergray   = true,
      reclaimable = false,
 	 upright 	 = true,	 
      energy      = 0,

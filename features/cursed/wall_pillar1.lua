@@ -5,7 +5,6 @@ local featureDef  =  {
 	 autoreclaimable = false,
      blocking    = true,
      burnable    = false,
-     nodrawundergray = false,
      reclaimable = false,
 	 upright 	 = true,
      energy      = 0,

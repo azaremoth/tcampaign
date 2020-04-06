@@ -18,6 +18,7 @@ local function createContainerDef(i)
      energy      = 0,
      damage      = 9999999999,
      metal       = 0,
+	 nodrawundergray = true,	 
      reclaimTime = 9999999999,
      mass        = 9999999999,
      object = objects[(i % #objects) + 1] ,

@@ -856,6 +856,10 @@ local function PlaceFeature(featureData, teamID)
 	end
 	
 	local name = featureData.name
+	local teamFromDefs = featureData.team
+	if teamFromDefs ~= nil then
+		teamID = teamFromDefs
+	end
 	local fd = FeatureDefNames[name]
 	if not (fd and fd.id) then
 		Spring.Echo("Missing feature placement", name)
