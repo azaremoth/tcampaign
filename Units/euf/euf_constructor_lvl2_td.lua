@@ -97,11 +97,11 @@ local unitDef = {
     "euf_solar",
     "euf_storage",		
     "euf_radar_lvl2",	
-    "euf_factory_td",
-    "euf_lasertower",	
+    "euf_factory_td",	
     "euf_plasmatower",
     "euf_aatower",
-    "euf_artytower",	
+    "euf_artytower",
+    "euf_lasertower",	
  },
   sfxtypes = {
     explosiongenerators = {
