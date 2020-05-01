@@ -95,7 +95,7 @@ local unitDef = {
     "euf_airport",		
     "euf_church",		
     "euf_bunker",
-    "euf_autocannon",	
+    "euf_autotower",	
     "euf_plasmatower",
     "euf_artytower",	
     "euf_aatower",

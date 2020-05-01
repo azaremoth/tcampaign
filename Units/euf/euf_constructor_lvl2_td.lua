@@ -98,7 +98,7 @@ local unitDef = {
     "euf_storage",		
     "euf_radar_lvl2",	
     "euf_factory_td",
-    "euf_autocannon",
+    "euf_autotower",
     "euf_plasmatower",
     "euf_pyrotower",
     "euf_aatower",
