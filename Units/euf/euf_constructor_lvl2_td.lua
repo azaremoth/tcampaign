@@ -87,10 +87,10 @@ local unitDef = {
   -- remark: will be overwriten by unit_attriutes.lua based on factors multiplied with workertime  
   resurrectSpeed     = 0,
   captureSpeed       = 0,  
-  repairSpeed        = 15,
-  reclaimSpeed       = 30,
-  workerTime         = 30,
-  terraformSpeed     = 300,
+  repairSpeed        = 12,
+  reclaimSpeed       = 24,
+  workerTime         = 24,
+  terraformSpeed     = 240,
   
   buildoptions = {
     "euf_metalextractor_lvl1",
