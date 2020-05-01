@@ -26,7 +26,7 @@ local unitDef = {
   damageModifier     = 0.001,
   description        = "Emiter for explosions",
   energyMake         = 0,
-  explodeAs          = "ATOMIC_BLAST",
+  explodeAs          = "ATOMIC_BLAST_ULTRA",
   firestandorders    = "1",
   footprintX         = 1,
   footprintZ         = 1,
@@ -49,7 +49,7 @@ local unitDef = {
   
   script = 'spawn_explosion.lua',
   
-  selfDestructAs     = "ATOMIC_BLAST",
+  selfDestructAs     = "ATOMIC_BLAST_ULTRA",
   showNanoFrame      = false,
   showNanoSpray      = false,
   side               = "neutral",
