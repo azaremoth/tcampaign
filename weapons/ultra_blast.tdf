@@ -1,0 +1,21 @@
+[SUICIDE_ULTRA]
+{
+  name=AtomicBlastWeapon;
+  areaofeffect=1024;
+  craterboost=1;
+  cratermult=3.5;
+  explosiongenerator=custom:REDGREENBLOOD_EXPLOSION;
+  impulseboost=0;
+  impulsefactor=0.4;
+  interceptedbyshieldtype=1;
+  range=1024;
+  reloadtime=3.6;
+  soundstart=null;
+  soundhit=explosion/mini_nuke;
+  turret=1;
+  weaponvelocity=250;
+  [DAMAGE]
+  {
+    default=9999999;
+  }
+}
