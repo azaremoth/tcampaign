@@ -185,10 +185,10 @@ local function BoredAnimation()
 	end
 end
 
-local function Checking()
-	local x, y, z = Spring.GetUnitPosition(unitID)
+local function Converter()
 	local converterTeam = Spring.GetUnitTeam(unitID)
 	while not converted do
+		local x, y, z = Spring.GetUnitPosition(unitID)	
 		local unitsAround = Spring.GetUnitsInSphere(x,y,z, 400)
 		for _,aUnitID in ipairs(unitsAround) do
 			local aLocalteam = Spring.GetUnitTeam(aUnitID)
@@ -207,6 +207,7 @@ end
 function script.Create()
 	SetMoveAnimationSpeed()
 	restore_delay = 1000
+	converted = false
 	--START BUILD CYCLE
 	Sleep(200)
 	while GetUnitValue(COB.BUILD_PERCENT_LEFT) > 0 do
@@ -218,7 +219,7 @@ function script.Create()
 	Spring.SetUnitBlocking(unitID, true, true, true, true, true, true, false)		
 	StartThread( Walkscript )
 	StartThread( BoredAnimation )
-	StartThread( Checking )
+	StartThread( Converter )
 end
 
 function script.StartMoving()
