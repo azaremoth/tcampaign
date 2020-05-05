@@ -19,6 +19,7 @@ local IgnoreUnit = {
 	[UnitDefNames.spawner_ghoul.id] = "spawner_ghoul",
 	[UnitDefNames.spawner_1bug.id] = "spawner_1bug",	
 	[UnitDefNames.spawn_nuke.id] = "spawn_nuke",
+	[UnitDefNames.spawn_suicide.id] = "spawn_suicide",	
 	[UnitDefNames.burrowcrust.id] = "burrowcrust",
 	[UnitDefNames.terraunit.id] = "terraunit",
 	[UnitDefNames.fakeunit_aatarget.id] = "fakeunit_aatarget",
