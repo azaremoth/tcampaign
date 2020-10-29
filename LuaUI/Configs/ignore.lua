@@ -27,7 +27,11 @@ local IgnoreUnit = {
 	[UnitDefNames.trails1.id] = "trails1",
 	[UnitDefNames.trails2.id] = "trails2",
 	[UnitDefNames.trails3.id] = "trails3",
-	[UnitDefNames.trails4.id] = "trails4",	
+	[UnitDefNames.trails4.id] = "trails4",
+	[UnitDefNames.grounddust1.id] = "grounddust1",
+	[UnitDefNames.grounddust2.id] = "grounddust2",
+	[UnitDefNames.grounddust3.id] = "grounddust3",
+	[UnitDefNames.grounddust4.id] = "grounddust4",		
 	}
 
 return IgnoreUnit

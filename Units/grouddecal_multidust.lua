@@ -3,8 +3,8 @@ local DECAL1 = {
   name        = "grounddust1",
   description = "grounddust1",
   buildingGroundDecalDecaySpeed = 0.0000000001,
-  buildingGroundDecalSizeX = 40,
-  buildingGroundDecalSizeY = 40,
+  buildingGroundDecalSizeX = 15,
+  buildingGroundDecalSizeY = 15,
   buildingGroundDecalType = "grounddust1.png",
 }
 local DECAL2 = {
@@ -12,8 +12,8 @@ local DECAL2 = {
   name        = "grounddust2",
   description = "grounddust2",
   buildingGroundDecalDecaySpeed = 0.0000000001,
-  buildingGroundDecalSizeX = 40,
-  buildingGroundDecalSizeY = 40,
+  buildingGroundDecalSizeX = 15,
+  buildingGroundDecalSizeY = 15,
   buildingGroundDecalType = "grounddust2.png",
 }
 local DECAL3 = {
@@ -21,8 +21,8 @@ local DECAL3 = {
   name        = "grounddust3",
   description = "grounddust3",
   buildingGroundDecalDecaySpeed = 0.0000000001,
-  buildingGroundDecalSizeX = 40,
-  buildingGroundDecalSizeY = 40,
+  buildingGroundDecalSizeX = 15,
+  buildingGroundDecalSizeY = 15,
   buildingGroundDecalType = "grounddust3.png",
 }
 local DECAL4 = {
@@ -30,8 +30,8 @@ local DECAL4 = {
   name        = "grounddust4",
   description = "grounddust4",
   buildingGroundDecalDecaySpeed = 0.0000000001,
-  buildingGroundDecalSizeX = 40,
-  buildingGroundDecalSizeY = 40,
+  buildingGroundDecalSizeX = 15,
+  buildingGroundDecalSizeY = 15,
   buildingGroundDecalType = "grounddust4.png",
 }
 ------------------------------------------------------ BASE CLASS
