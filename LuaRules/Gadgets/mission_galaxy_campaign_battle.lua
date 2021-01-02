@@ -1162,6 +1162,7 @@ local function InitializeUnlocks()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
+		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility
 		SetTeamAbilities(teamID, customKeys)
 		SetTeamUnlocks(teamID, customKeys)
 		InitializeCommanderParameters(teamID, customKeys)
@@ -1173,6 +1174,7 @@ local function InitializeTypeVictoryLocation()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
+		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
 		InitializeTeamTypeVictoryLocations(teamID, customKeys)
 	end
 end
@@ -1230,7 +1232,7 @@ local function InitializeMidgameUnits(gameFrame)
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
-		
+		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
 		local midgameUnits = CustomKeyToUsefulTable(customKeys and customKeys.midgameunits)
 		if midgameUnits then
 			for j = 1, #midgameUnits do
@@ -1245,6 +1247,7 @@ local function DoInitialUnitPlacement()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
+		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
 		PlaceTeamUnits(teamID, customKeys, allyTeamID == PLAYER_ALLY_TEAM_ID)
 	end
 	
@@ -1273,6 +1276,7 @@ local function DoInitialTerraform(noBuildings)
 		for i = 1, #teamList do
 			local teamID = teamList[i]
 			local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
+			if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility			
 			local initialUnits = GetExtraStartUnits(teamID, customKeys)
 			initialUnitDataTable[teamID] = initialUnitDataTable[teamID] or CustomKeyToUsefulTable(customKeys and customKeys.extrastartunits)
 			if initialUnits then
@@ -1355,6 +1359,7 @@ end
 
 function GalaxyCampaignHandler.DeployRetinue(unitID, x, z, facing, teamID)
 	local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
+	if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility	
 	local retinueData = CustomKeyToUsefulTable(customKeys and customKeys.retinuestartunits)
 	if retinueData then
 		local range = 70 + #retinueData*20
@@ -1367,6 +1372,7 @@ end
 
 function GalaxyCampaignHandler.DeployRetinue(unitID, x, z, facing, teamID)
 	local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
+	if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility	
 	local retinueData = CustomKeyToUsefulTable(customKeys and customKeys.retinuestartunits)
 	if retinueData then
 		local range = 70 + #retinueData*20
