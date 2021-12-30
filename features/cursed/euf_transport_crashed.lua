@@ -1,0 +1,29 @@
+local objectname= "euf_transport_crashed" 
+local featureDef  =  {
+   name           = "euf_transport_crashed",
+   blocking       = true,	
+   mass			   = 1000000000,
+   collisionVolumeType 	= "Box",
+   collisionVolumeScales 	= "80 80 40",
+   collisionVolumeOffsets 	= "0 0 0", 
+   damage            = 10000,
+   description       = "Crashed transport",
+   energy            = 0,
+   flammable         = 0,
+   nodrawundergray   = true,
+   footprintX        = 6,
+   footprintZ        = 6,
+   upright          = true,
+   height      		= "30",
+   hitdensity       = "1000000000",
+   metal            = 50,
+   object           = "features/euf_transport_crashed.s3o",  
+   reclaimable		= false,
+   autoreclaimable	= false,
+   world            = "allworld",
+		customparams = { 
+			normaltex 		   	= "unittextures/normalmaps/euf_transport_normal.png",
+			normalmaps 		   	= "yes",
+		}, 	   
+}
+return lowerkeys({[featureDef.name] = featureDef})
