@@ -7,8 +7,8 @@ return {
   mutator = 'Official',
   modtype = 1,
   depend = {
-    'rapid://tc:stable',
-    -- 'The Cursed $VERSION',
+    -- 'rapid://tc:stable',
+    'The Cursed $VERSION',
 	-- 'Spring content v1',	  
   },
 }
