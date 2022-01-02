@@ -3,6 +3,7 @@ local IgnoreUnit = {
 	[UnitDefNames.euf_transport_mis.id] = "euf_transport_mis",
 	[UnitDefNames.medikit.id] = "medikit",	
 	[UnitDefNames.converter.id] = "converter",
+	[UnitDefNames.converter2.id] = "converter2",	
 	[UnitDefNames.noemit_high.id] = "noemit_high",
 	[UnitDefNames.emit_fire.id] = "emit_fire",
 	[UnitDefNames.emit_fire_mid.id] = "emit_fire_mid",
