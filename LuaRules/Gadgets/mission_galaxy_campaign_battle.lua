@@ -579,7 +579,7 @@ local function SetupInitialUnitParameters(unitID, unitData)
 		Spring.SetUnitRulesParam(unitID, "ignoredByAI", 1, publicTrueTable)
 		Spring.SetUnitRulesParam(unitID, "avoidAttackingNeutral", 1)
 	elseif unitData.notAutoAttacked then
-		Spring.SetUnitNeutral(unitID, true) 
+		Spring.SetUnitNeutral(unitID, true)
 		Spring.SetUnitRulesParam(unitID, "ignoredByAI", 1, publicTrueTable)
 		Spring.SetUnitRulesParam(unitID, "avoidAttackingNeutral", 1)
 	end
@@ -688,14 +688,14 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		wantLevelGround = wantLevelGround or {}
 		wantLevelGround[#wantLevelGround + 1] = {
 			pos = {x, Spring.GetGroundHeight(x,z), z},
-			xSize = xSize, 
+			xSize = xSize,
 			zSize = zSize,
 		}
 	end
 	
 	if not unitID then
 		Spring.MarkerAddPoint(x, 0, z, "Error creating unit " .. (((ud or {}).humanName) or "???"))
-		return 
+		return
 	end
 	
 	if unitData.shieldFactor and ud.customParams.shield_power then
@@ -713,7 +713,7 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		local patrolRoute = unitData.patrolRoute
 		local patrolCommands = {
 			[1] = {
-				cmdID = CMD_RAW_MOVE, 
+				cmdID = CMD_RAW_MOVE,
 				pos = patrolRoute[1]
 			}
 		}
@@ -739,7 +739,7 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 		
 		local patrolCommands = {
 			[1] = {
-				cmdID = CMD.PATROL, 
+				cmdID = CMD.PATROL,
 				pos = {cx, cz}
 			}
 		}
@@ -772,8 +772,8 @@ local function PlaceUnit(unitData, teamID, doLevelGround, findClearPlacement)
 	end
 end
 
-local function AddMidgameUnit(unitData, teamID, gameFrame)
-	local n = unitData.delay
+local function AddMidgameUnit(unitData, teamID, gameFrame, spawnFrameOverride)
+	local n = spawnFrameOverride or unitData.delay
 	if gameFrame > n then
 		return -- Loaded game.
 	end
@@ -840,7 +840,7 @@ local function AddUnitTerraform(unitData)
 			z - zsize,
 			x + xsize,
 			z + zsize
-		}, 
+		},
 		height = unitData.terraformHeight,
 	}
 	
@@ -856,10 +856,6 @@ local function PlaceFeature(featureData, teamID)
 	end
 	
 	local name = featureData.name
-	local teamFromDefs = featureData.team
-	if teamFromDefs ~= nil then
-		teamID = teamFromDefs
-	end
 	local fd = FeatureDefNames[name]
 	if not (fd and fd.id) then
 		Spring.Echo("Missing feature placement", name)
@@ -933,7 +929,7 @@ local function ProcessUnitCommand(unitID, command)
 		if command.pos then
 			command.pos[1], command.pos[2] = SanitizeBuildPositon(command.pos[1], command.pos[2], ud, command.facing or 0)
 		else -- Must be a factory production command
-			Spring.GiveOrderToUnit(unitID, command.cmdID, {}, command.options or 0)
+			Spring.GiveOrderToUnit(unitID, command.cmdID, 0, command.options or 0)
 			return
 		end
 	end
@@ -944,7 +940,7 @@ local function ProcessUnitCommand(unitID, command)
 		local x, z = command.pos[1], command.pos[2]
 		local y = CallAsTeam(team,
 			function ()
-				return Spring.GetGroundHeight(x, z) 
+				return Spring.GetGroundHeight(x, z)
 			end
 		)
 		
@@ -956,7 +952,7 @@ local function ProcessUnitCommand(unitID, command)
 		local p = command.atPosition
 		local units = Spring.GetUnitsInRectangle(p[1] - BUILD_RESOLUTION, p[2] - BUILD_RESOLUTION, p[1] + BUILD_RESOLUTION, p[2] + BUILD_RESOLUTION)
 		if units and units[1] then
-			Spring.GiveOrderToUnit(unitID, command.cmdID, {units[1]}, command.options or 0)
+			Spring.GiveOrderToUnit(unitID, command.cmdID, units[1], command.options or 0)
 		end
 		return
 	end
@@ -1097,6 +1093,14 @@ local function SetTeamUnlocks(teamID, customKeys)
 			unlockCount = unlockCount + 1
 			Spring.SetTeamRulesParam(teamID, "unlockedUnit" .. unlockCount, ud.name, alliedTrueTable)
 			unlockedUnits[ud.id] = true
+			if ud.customParams.parent_of_plate then
+				local pud = UnitDefNames[ud.customParams.parent_of_plate]
+				if pud and not unlockedUnits[pud.id] then
+					unlockCount = unlockCount + 1
+					Spring.SetTeamRulesParam(teamID, "unlockedUnit" .. unlockCount, pud.name, alliedTrueTable)
+					unlockedUnits[pud.id] = true
+				end
+			end
 		end
 	end
 	Spring.SetTeamRulesParam(teamID, "unlockedUnitCount", unlockCount, alliedTrueTable)
@@ -1104,7 +1108,7 @@ local function SetTeamUnlocks(teamID, customKeys)
 end
 
 local function SetTeamAbilities(teamID, customKeys)
---	local abilityData = CustomKeyToUsefulTable(customKeys and customKeys.campaignabilities)
+	local abilityData = CustomKeyToUsefulTable(customKeys and customKeys.campaignabilities)
 	if not abilityData then
 		return
 	end
@@ -1137,7 +1141,7 @@ local function PlaceTeamUnits(teamID, customKeys, alliedToPlayer)
 end
 
 local function PlaceFeatures(featureData)
-	local gaiaTeamID = Spring.GetGaiaTeamID() 
+	local gaiaTeamID = Spring.GetGaiaTeamID()
 	for i = 1, #featureData do
 		PlaceFeature(featureData[i], gaiaTeamID)
 	end
@@ -1162,7 +1166,6 @@ local function InitializeUnlocks()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
-		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility
 		SetTeamAbilities(teamID, customKeys)
 		SetTeamUnlocks(teamID, customKeys)
 		InitializeCommanderParameters(teamID, customKeys)
@@ -1174,7 +1177,6 @@ local function InitializeTypeVictoryLocation()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
-		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
 		InitializeTeamTypeVictoryLocations(teamID, customKeys)
 	end
 end
@@ -1207,14 +1209,17 @@ local function CheckDisableControlAiMessage()
 	disableAiUnitControl = nil
 end
 
-local function PlaceMidgameUnits(unitList)
+local function PlaceMidgameUnits(unitList, gameFrame)
 	for i = 1, #unitList do
 		local data = unitList[i]
 		local findClearPlacement = true -- Cursed
 		if data.unitData.spawnRadius == 0 then -- Cursed
 			findClearPlacement = false -- Cursed
+		end		
+		PlaceUnit(data.unitData, data.teamID, true, findClearPlacement) -- Cursed findClearPlacement did replace true
+		if data.unitData.repeatDelay then
+			AddMidgameUnit(data.unitData, data.teamID, gameFrame, gameFrame + data.unitData.repeatDelay)
 		end
-		PlaceUnit(data.unitData, data.teamID, true, findClearPlacement) -- Cursed
 	end
 	
 	if commandsToGive then
@@ -1232,7 +1237,7 @@ local function InitializeMidgameUnits(gameFrame)
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
-		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
+		
 		local midgameUnits = CustomKeyToUsefulTable(customKeys and customKeys.midgameunits)
 		if midgameUnits then
 			for j = 1, #midgameUnits do
@@ -1247,7 +1252,6 @@ local function DoInitialUnitPlacement()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _,_,_,_,_,allyTeamID,_,customKeys = Spring.GetTeamInfo(teamID, true)
-		if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility		
 		PlaceTeamUnits(teamID, customKeys, allyTeamID == PLAYER_ALLY_TEAM_ID)
 	end
 	
@@ -1268,7 +1272,7 @@ end
 
 local function DoInitialTerraform(noBuildings)
 	local terraformList = CustomKeyToUsefulTable(Spring.GetModOptions().initalterraform) or {}
-	local gaiaTeamID = Spring.GetGaiaTeamID() 
+	local gaiaTeamID = Spring.GetGaiaTeamID()
 	
 	if not noBuildings then
 		-- Add terraform for structures
@@ -1276,7 +1280,6 @@ local function DoInitialTerraform(noBuildings)
 		for i = 1, #teamList do
 			local teamID = teamList[i]
 			local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
-			if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility			
 			local initialUnits = GetExtraStartUnits(teamID, customKeys)
 			initialUnitDataTable[teamID] = initialUnitDataTable[teamID] or CustomKeyToUsefulTable(customKeys and customKeys.extrastartunits)
 			if initialUnits then
@@ -1308,7 +1311,7 @@ local function DoInitialTerraform(noBuildings)
 	for i = 1, #terraformList do
 		local terraform = terraformList[i]
 		local pos = terraform.position
-		if terraform.terraformShape == 1 then 
+		if terraform.terraformShape == 1 then
 			-- Rectangle
 			local points = {
 				{x = pos[1], z = pos[2]},
@@ -1317,17 +1320,20 @@ local function DoInitialTerraform(noBuildings)
 				{x = pos[1], z = pos[4] - 8},
 				{x = pos[1], z = pos[2]},
 			}
-			GG.Terraform.TerraformArea(terraform.terraformType, points, 5, terraform.height or 0, nil, nil, terraform.teamID or gaiaTeamID, terraform.volumeSelection or 0, true, pos[1], pos[2], i, terraform.needConstruction)
+			GG.Terraform.TerraformArea(terraform.terraformType, points, 5, terraform.height or 0, nil, nil, terraform.teamID or gaiaTeamID,
+				terraform.volumeSelection or 0, true, pos[1], pos[2], i, terraform.needConstruction, terraform.enableDecay)
 		elseif terraform.terraformShape == 2 then
 			-- Line
 			local points = {
 				{x = pos[1], z = pos[2]},
 				{x = pos[3], z = pos[4]},
 			}
-			GG.Terraform.TerraformWall(terraform.terraformType, points, 2, terraform.height or 0, nil, nil, terraform.teamID or gaiaTeamID, terraform.volumeSelection or 0, true, pos[1], pos[2], i, terraform.needConstruction)
+			GG.Terraform.TerraformWall(terraform.terraformType, points, 2, terraform.height or 0, nil, nil, terraform.teamID or gaiaTeamID,
+				terraform.volumeSelection or 0, true, pos[1], pos[2], i, terraform.needConstruction, terraform.enableDecay)
 		elseif terraform.terraformShape == 3 then
 			-- Ramp
-			GG.Terraform.TerraformRamp(pos[1], pos[2], pos[3], pos[4], pos[5], pos[6], terraform.width, nil, nil, terraform.teamID or gaiaTeamID, terraform.volumeSelection or 0, true, pos[1], pos[3], i, terraform.needConstruction)
+			GG.Terraform.TerraformRamp(pos[1], pos[2], pos[3], pos[4], pos[5], pos[6], terraform.width, nil, nil, terraform.teamID or gaiaTeamID,
+				terraform.volumeSelection or 0, true, pos[1], pos[3], i, terraform.needConstruction, terraform.enableDecay)
 		end
 	end
 	GG.Terraform.ForceTerraformCompletion(true)
@@ -1342,7 +1348,7 @@ local GalaxyCampaignHandler = {}
 
 function Unlocks.GetIsUnitUnlocked(teamID, unitDefID)
 	if unlockedUnitsByTeam[teamID] then
-		if not (unlockedUnitsByTeam[teamID][unitDefID]) then 
+		if not (unlockedUnitsByTeam[teamID][unitDefID]) then
 			return false
 		end
 	end
@@ -1359,20 +1365,6 @@ end
 
 function GalaxyCampaignHandler.DeployRetinue(unitID, x, z, facing, teamID)
 	local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
-	if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility	
-	local retinueData = CustomKeyToUsefulTable(customKeys and customKeys.retinuestartunits)
-	if retinueData then
-		local range = 70 + #retinueData*20
-		for i = 1, #retinueData do
-			local unitData = retinueData[i]
-			PlaceRetinueUnit(unitData.retinueID, range, unitData.unitDefName, x, z, facing, teamID, unitData.experience)
-		end
-	end
-end
-
-function GalaxyCampaignHandler.DeployRetinue(unitID, x, z, facing, teamID)
-	local customKeys = select(8, Spring.GetTeamInfo(teamID, true))
-	if (type(customKeys) ~= "table") then customKeys = select(7, Spring.GetTeamInfo(teamID, true)) end --for Spring 104 compatibility	
 	local retinueData = CustomKeyToUsefulTable(customKeys and customKeys.retinuestartunits)
 	if retinueData then
 		local range = 70 + #retinueData*20
@@ -1504,7 +1496,7 @@ function gadget:GameFrame(n)
 	end
 	
 	if midgamePlacement[n] then
-		PlaceMidgameUnits(midgamePlacement[n])
+		PlaceMidgameUnits(midgamePlacement[n], n)
 		midgamePlacement[n] = nil
 	end
 	
